@@ -1,7 +1,7 @@
-package br.com.fiap.model.dao;
+package br.com.fiap.dao;
 
-import br.com.fiap.model.connections.ConnectionFactory;
-import br.com.fiap.model.entities.Aluno;
+import br.com.fiap.connections.ConnectionFactory;
+import br.com.fiap.entities.Aluno;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ public class AlunoDAO {
         this.conn = new ConnectionFactory().getConnection();
     }
 
-    public ArrayList<Aluno> getAluno () {
+    public ArrayList<Aluno> getAllAluno () {
         try {
             ArrayList<Aluno> alunos = new ArrayList<>();
 
@@ -39,6 +39,26 @@ public class AlunoDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar na tabela", e);
+        }
+    }
+
+    public Aluno getByIdAluno (String rm) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM j_alunos WHERE rm=?");
+            stmt.setString(1, rm);
+            ResultSet rs = stmt.executeQuery();
+            Aluno aluno = new Aluno(
+                rs.getString(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getDouble(4)
+            );
+
+            stmt.close();
+            return aluno;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar esse aluno na tabela", e);
         }
     }
 

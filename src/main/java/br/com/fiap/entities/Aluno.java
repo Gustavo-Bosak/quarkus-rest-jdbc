@@ -1,4 +1,4 @@
-package br.com.fiap.model.entities;
+package br.com.fiap.entities;
 
 public class Aluno {
     private String rm;
