@@ -47,12 +47,17 @@ public class AlunoDAO {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM j_alunos WHERE rm=?");
             stmt.setString(1, rm);
             ResultSet rs = stmt.executeQuery();
-            Aluno aluno = new Aluno(
-                rs.getString(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getDouble(4)
-            );
+
+            Aluno aluno = null;
+
+            if (rs.next()) {
+                aluno = new Aluno(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getDouble(4)
+                );
+            }
 
             stmt.close();
             return aluno;

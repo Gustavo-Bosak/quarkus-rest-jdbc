@@ -47,8 +47,12 @@ public class AlunoResource {
     }
 
     @DELETE
-    public Response delete (String rm) {
+    @Path("/{rm}")
+    public Response delete (String rm, @Context UriInfo uriInfo) {
         bo.delete(rm);
+
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(rm);
         return Response.ok().build();
     }
 }
